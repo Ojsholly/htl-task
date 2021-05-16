@@ -18,7 +18,6 @@ class CreateUsersTable extends Migration
             $table->string('username');
             $table->string('mobile_number');
             $table->decimal('amount', 10, 2);
-            $table->rememberToken();
             $table->timestamps();
         });
     }

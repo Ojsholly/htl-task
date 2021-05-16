@@ -2,6 +2,11 @@
 
 namespace App\Console;
 
+use App\Console\Commands\FifthBillingJob;
+use App\Console\Commands\FirstBillingJob;
+use App\Console\Commands\ThirdBillingJob;
+use App\Console\Commands\FourthBillingJob;
+use App\Console\Commands\SecondBillingJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,6 +19,11 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
+        FirstBillingJob::class,
+        SecondBillingJob::class,
+        ThirdBillingJob::class,
+        FourthBillingJob::class,
+        FifthBillingJob::class,
     ];
 
     /**
@@ -25,6 +35,11 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command('first:billing')->everyMinute();
+        $schedule->command('second:billing')->dailyAt('12:00')->runInBackground();
+        $schedule->command('third:billing')->dailyAt('12:00')->runInBackground();
+        $schedule->command('fourth:billing')->dailyAt('12:00')->runInBackground();
+        $schedule->command('fifth:billing')->dailyAt('12:00')->runInBackground();
     }
 
     /**
@@ -34,7 +49,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }
